@@ -1,15 +1,18 @@
 const CustomError = require("../extensions/custom-error");
 
 module.exports = function createDreamTeam(members) {
- let i=0;
+if (!Array.isArray(members)){
+	return false
+}
+else {
 let dreamTeam="";
-for(i; i<members.length; i++){
-if(typeof members[i] === typeof 'string'){
-dreamTeam +=" "+members[i]
+let arr=[];
+for(let i=0; i<members.length; i++){
+if(typeof members[i] === 'string'){
+arr[i] =members[i].match(/[A-Za-z]/);
 }
 }
 
-let passworDT = dreamTeam.match(/[A-Z]/g).sort().join("");
-
-return passworDT;
+return arr.join('').toUpperCase().split('').sort().join('');
+}
 };
