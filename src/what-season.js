@@ -9,7 +9,7 @@ return 'Error';
 
 else{ 
 
-let month = date.getMonth();
+let month = date.getUTCMonth();
 
 let monthes = ['winter', 'winter', 'spring', 'spring', 'spring', 'summer', 
 'summer', 'summer', 'autumn', 'autumn', 'autumn', 'winter'];

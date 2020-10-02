@@ -1,54 +1,51 @@
 const CustomError = require("../extensions/custom-error");
 
-class ChainMaker  {
- 
-strNew ='';
-arr = [];
+const chainMaker = {
+
+arr : [],
 
 getLength() {
-
 this.arr.push('( '+this.arr.length+' )');
-this.strNew=this.arr[this.arr.length-1];
-return this;
-}
-
+return this
+},
 
 addLink(value) {
-if (typeof value === 'undefined'){
-this.arr.push('( '+" "+' )');
-this.strNew=this.arr.join('~~');
-}
-else if(!value && typeof value === 'object'){
-this.arr.push('( '+"null"+' )');
-this.strNew=this.arr.join('~~');
-}
-
-else {
-this.arr.push('( '+value+' )');
-this.strNew=value;
-}
-return this;
-} 
+	if (typeof value === 'undefined'){
+		this.arr.push('( '+" "+' )');
+	}
+	else if(!value && typeof value === 'object'){
+		this.arr.push('( '+"null"+' )');
+	}
+	else {
+		this.arr.push('( '+value+' )');
+	}
+	return this;
+	
+}, 
 
 reverseChain() {
-
-this.arr = this.arr.reverse();
-this.strNew=this.arr.join('~~');
-return this;
-} 
+	this.arr.reverse();
+	return this;
+	
+}, 
 
 removeLink(position) {
-
-this.arr.splice(position-1,1);
-this.strNew=this.arr.join('~~');
-return this;
-} 
+	if(position>0 && position < this.arr.length+1 && typeof position === 'number' && (Math.trunc(position)-position)>=0 ){
+		this.arr.splice(position-1,1);
+		return this;
+		
+		}
+	else {
+	this.arr=[];
+	throw new Error();
+	return this;
+	}
+}, 
 
 finishChain() {
-
-return this.strNew=this.arr.join('~~');
-}
-
-}
-const chainMaker = new ChainMaker();
+	let res = this.arr.join('~~');
+	this.arr=[];
+	return res;
+	}
+};
 module.exports = chainMaker;

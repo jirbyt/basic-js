@@ -1,34 +1,50 @@
 const CustomError = require("../extensions/custom-error");
 
-module.exports = function transform(arr) {
-let a = arr; 
-if (Array.isArray(a) === true || !a && typeof a ==='object'){
-for(let i=0; i<arr.length; i++){
-if(a[i]=="--discard-next" && a[i+1] !== undefined){
-a.splice(i, 2);
-}
+module.exports = function transform(arrOrg) {
+	if (Array.isArray(arrOrg) !== true){
+		 throw new Error();
+	}
+	else{
+		let a = [];
+		let arr=[];
+		for(let i=0; i<arrOrg.length; i++){
+			arr[i]=	arrOrg[i];
+		}
+		for(let i=0; i<arr.length; i++){
+			
+			if(typeof arr[i] === 'string'){
 
-else if(a[i]=="--discard-prev" && a[i-1] !== undefined){
-a.splice(i-1, 2);
+				if(arr[i]=="--discard-next"){
 
-}
+				a[i-1] =arr[i-1];
+				delete arr[i+1];
+				delete a[i+1]
+				}
 
-else if(a[i]=="--double-next" && a[i+1] !== undefined){
-a[i]=a[i+1];
+				else if(arr[i]=="--discard-prev"){
+				delete a[i-1];
+				a[i+1] =arr[i+1];
+				delete arr[i-1];
+				}
 
-}
+				else if(arr[i]=="--double-next" && typeof arr[i+1]==='number'){
+				arr[i]=arr[i+1];
+				a[i]=arr[i+1];
+				a[i+1]=arr[i+1];
+				a[i-1]=arr[i-1];
+				}
 
-else if(a[i]=="--double-prev" && a[i-1] !== undefined){
-a[i]=a[i-1]
-
-}
-
-else if(a[i]=="--discard-next"  || a[i]=="--discard-prev" || a[i]=="--double-next" 	|| a[i]=="--double-prev")
-a.splice(i, 1);
-}
-return a
-
-}
-else 
-return 'Error'
+				else if(arr[i]=="--double-prev" && typeof arr[i-1]==='number'){
+				arr[i]=arr[i-1];
+				a[i-1]=arr[i-1];
+				a[i]= arr[i-1];
+				a[i+1]= arr[i+1];
+				}
+			}
+			else {
+			a[i] =arr[i];
+			}
+		}
+return a.filter(item => item !== undefined)
+	}
 };
