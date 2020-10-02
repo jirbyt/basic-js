@@ -12,35 +12,33 @@ module.exports = function transform(arrOrg) {
 		}
 		for(let i=0; i<arr.length; i++){
 			
-			if(typeof arr[i] === 'string'){
-
-				if(arr[i]=="--discard-next"){
+				if(arr[i]==="--discard-next"){
 
 				a[i-1] =arr[i-1];
 				delete arr[i+1];
 				delete a[i+1]
 				}
 
-				else if(arr[i]=="--discard-prev"){
+				else if(arr[i]==="--discard-prev"){
 				delete a[i-1];
 				a[i+1] =arr[i+1];
 				delete arr[i-1];
 				}
 
-				else if(arr[i]=="--double-next" && typeof arr[i+1]==='number'){
+				else if(arr[i]==="--double-next"){
 				arr[i]=arr[i+1];
 				a[i]=arr[i+1];
 				a[i+1]=arr[i+1];
 				a[i-1]=arr[i-1];
 				}
 
-				else if(arr[i]=="--double-prev" && typeof arr[i-1]==='number'){
+				else if(arr[i]==="--double-prev"){
 				arr[i]=arr[i-1];
 				a[i-1]=arr[i-1];
 				a[i]= arr[i-1];
 				a[i+1]= arr[i+1];
 				}
-			}
+			
 			else {
 			a[i] =arr[i];
 			}
